@@ -1,0 +1,68 @@
+Delivered-To: craiglttl@gmail.com
+Received: by 10.52.108.232 with SMTP id hn8csp42069vdb;
+        Sun, 8 Apr 2012 14:24:31 -0700 (PDT)
+Return-Path: <marcus.phillips@gmail.com>
+Received-SPF: pass (google.com: domain of marcus.phillips@gmail.com designates 10.236.109.66 as permitted sender) client-ip=10.236.109.66;
+Authentication-Results: mr.google.com; spf=pass (google.com: domain of marcus.phillips@gmail.com designates 10.236.109.66 as permitted sender) smtp.mail=marcus.phillips@gmail.com; dkim=pass header.i=marcus.phillips@gmail.com
+Received: from mr.google.com ([10.236.109.66])
+        by 10.236.109.66 with SMTP id r42mr4130549yhg.39.1333920271290 (num_hops = 1);
+        Sun, 08 Apr 2012 14:24:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:from:date:x-google-sender-auth:message-id
+         :subject:to:content-type:content-transfer-encoding;
+        bh=GtAzu8ecliSgJdVpTdEEN6z2qjp2jgrsZGOasO5vvSE=;
+        b=cmZWqm6VI+pa6N156MnzqvqYNmWXrQVB49VQ9lKgrgFBEUTqNTRMeUu22ib4KCf5zF
+         3YdX5FQO/nBvmdEd8wQiIEGTBiCdRYl9m7JZOq6HVEYKS7iuxKwtiBEf/72jGyNm8pzh
+         ORcZPIOznjaZeIzG6471ytliHF2qUWVeKAUVoTx/PIuEKFf+Fw0VyNmc2PZs87OMG53R
+         F4B4qLaX/ma5e+O12VXTK84SlxpV7Yng/Id+zJ66DK8cB1QZAezZpiO1AVlkajtLYe1/
+         AUEc9ONEDjrLUt+b8s5Rpo8Liro6juY6pb2VvlLzdEEsmpZ9zMnBAuW+QVXdJ5bsbt05
+         FaYg==
+Received: by 10.236.109.66 with SMTP id r42mr4130549yhg.39.1333920271285; Sun,
+ 08 Apr 2012 14:24:31 -0700 (PDT)
+MIME-Version: 1.0
+Sender: marcus.phillips@gmail.com
+Received: by 10.236.95.143 with HTTP; Sun, 8 Apr 2012 14:23:50 -0700 (PDT)
+From: Marcus Phillips <Boston@MarcusPhillips.com>
+Date: Sun, 8 Apr 2012 14:23:50 -0700
+X-Google-Sender-Auth: GqtDMCjxDqsFdauUtzkviphlYn0
+Message-ID: <CAMfwv2DwApL1kC+rjKsCxWLp_HhOpvTET+qKkB=FR1TXsWFvrQ@mail.gmail.com>
+Subject: Independent bound todo items
+To: Silas Barta <sbarta@gmail.com>, Shail Patel <shailpatel2@gmail.com>, 
+  Ryan Coppolo <rcoppolo22@gmail.com>, Craig Little <craiglttl@gmail.com>, 
+  "Anthony Phillips (Tony)" <anthony.phillips@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+
+Notes from our meeting today, a list of things that can be done
+without reading all the (in-flux) bound source code first:
+
+--- Importance: critical, Difficulty: high ---
+- RELIABILIITY: build a performance test suite
+=C2=A0 - there are some standard performance tests for js template
+languages. we need to get a benchmark in those that we can compare to
+the benchmarks of other libs
+  - fork https://github.com/brianjlandau/js-templates-benchmark and
+add bound templates to the suite
+
+--- node build script ---
+  - versioning
+  - running tests
+  - composing/concatenating files into build fuiles
+  - start by reading "a successful git branching model" and
+implementing the version-publish behavior as a node script
+
+--- animation/transition library ---
+
+--- Importance: high, Difficulty: medium ---
+- RELIABILITY:=C2=A0write a new test file for the=C2=A0bound.proxy=C2=A0sub=
+-library
+
+--- Importance: high, Difficulty: medium ---
+- RELIABILITY: write a new test file for the js.js sub-library
+
+
+
+
+--
+Be the cog you wish to see in the machine
