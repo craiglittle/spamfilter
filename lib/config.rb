@@ -10,7 +10,7 @@ module SpamFilter
     DEFAULT_HAM_TEST    = 'corpus/test_ham'
 
     DEFAULT_TOP_TOKENS_LIST_SIZE = 27
-    DEFAULT_SPAM_THRESHOLD       = 0.9
+    DEFAULT_MIN_SPAM_SCORE       = 0.6
     DEFAULT_HAM_TOKEN_MULTIPLIER = 1
     DEFAULT_SPAMICITIES_FILE     = false
 
@@ -30,7 +30,7 @@ module SpamFilter
 
     VALID_OPTIONS_KEYS = [
       :top_tokens_list_size,
-      :spam_threshold,
+      :min_spam_score,
       :ham_token_multiplier,
       :spamicities_file
     ]
@@ -61,7 +61,7 @@ module SpamFilter
       self.spam_test            = DEFAULT_SPAM_TEST
       self.ham_test             = DEFAULT_HAM_TEST
       self.top_tokens_list_size = DEFAULT_TOP_TOKENS_LIST_SIZE
-      self.spam_threshold       = DEFAULT_SPAM_THRESHOLD
+      self.min_spam_score       = DEFAULT_MIN_SPAM_SCORE
       self.ham_token_multiplier = DEFAULT_HAM_TOKEN_MULTIPLIER
       self.spamicities_file     = DEFAULT_SPAMICITIES_FILE
     end

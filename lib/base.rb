@@ -104,37 +104,14 @@ module SpamFilter
     end
 
     def score_emails(corpus_type, token_spamicities)
-      print "Testing #{corpus_type.to_s} emails..."
       emails = corpus_type == :spam ? spam_test : ham_test
-      test_output = emails.inject([]) { |output, email| output << test_single_email(email, corpus_type, token_spamicities) }
-      puts 'done.'
+      test_output = emails.inject([]) { |output, email| output << classify(email, corpus_type, token_spamicities) }
       test_output
     end
     
-    def score_email(email, corpus_type, token_spamicities)
+    def classify(email, corpus_type, training_data)
       tokens = tokenize_email(email)
-      tokens.each do |k, v| 
-        spamicity = token_spamicities[k] || 0.5
-        tokens[k] = { :count         => v,
-                      :spamicity     => spamicity,
-                      :abs_spamicity => (spamicity - 0.5).abs }
-      end
-
-      sorted_tokens = tokens.sort_by{ |_, values| values[:abs_spamicity] }
-      top_tokens = []
-
-      while top_tokens.size < top_tokens_list_size
-        top_token = sorted_tokens.pop
-        repeat = (top_tokens.size == top_tokens_list_size - 1 ? 1 : [2, top_token[1][:count]].min)
-        repeat.times { top_tokens << top_token }
-      end
-      top_tokens = top_tokens.inject({}) { |hash, token| hash[token[0]] = token[1]; hash }
-
-      n = top_tokens.inject(0) { |result, token| result + (Math.log(1 - token[1][:spamicity]) - Math.log(token[1][:spamicity])) }
-      email_spamicity = (1 / (1 + Math.exp(n)))
-      verdict = email_spamicity >= spam_threshold ? :spam : :ham 
-
-      # { :path => email, :spamicity => email_spamicity, :top_tokens => top_tokens, :verdict => verdict, :accurate? => verdict == corpus_type }
+      spamicity = score(tokens, training_data)
       { :accurate? => verdict == corpus_type }
     end
 
@@ -177,6 +154,10 @@ module SpamFilter
         sum += term
       end
       [1.0, sum].min
+    end
+
+    def classification(score)
+      score > self.min_spam_score ? :spam : :ham
     end
   end
 end
