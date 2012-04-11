@@ -1,18 +1,40 @@
 #!/usr/bin/env ruby
-
-require 'yaml'
-require_relative './lib/config'
+require 'optparse'
 require_relative './lib/base'
 
-SpamFilter.configure do |config|
-  config.spam_corpus          = 'corpus/sa_spam'
-  config.ham_corpus           = 'corpus/sa_ham'
-  config.spam_test            = 'corpus/spam_test'
-  config.ham_test             = 'corpus/ham_test'
-  # config.spamicities_file     = 'spamicities.yml'
-  config.top_tokens_list_size = 27
-  config.spam_threshold       = 0.9
-  config.ham_token_multiplier = 1
+optparse = OptionParser.new do |opts|
+
+  opts.on('-h', '--help', 'Display this screen') do
+    puts opts
+    exit
+  end
+  
+  opts.on('--train-spam', '--train-spam FILE(S)', 'Add message(s) to the spam training corpus') do |spam_path|
+    sf = SpamFilter.new
+    Dir[spam_path].each do |spam|
+      text = sf.read(spam)
+      sf.train(text, :spam)
+    end
+    sf.save
+    puts 'Message(s) added to spam training corpus.'
+  end
+
+  opts.on('--train-ham', '--train-ham FILE', 'Add a message to the ham training corpus') do |ham_path|
+    sf = SpamFilter.new
+    Dir[ham_path].each do |ham|
+      text = sf.read(ham)
+      sf.train(text, :ham)
+    end
+    sf.save
+    puts 'Message(s) added to ham training corpus.'
+  end
+
+  opts.on('--clear-db', '--clear-database', 'Deletes all data from training corpus database') do
+    sf = SpamFilter.new
+    sf.clear_database
+    sf.save
+    puts 'Training corpus database cleared.'
+  end
 end
 
-SpamFilter.calculate_spamicities
+optparse.parse!
